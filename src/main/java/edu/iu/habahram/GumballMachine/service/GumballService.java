@@ -29,6 +29,7 @@ public class GumballService implements IGumballService{
             record.setCount(result.countAfter());
             save(record);
         }
+
         return result;
     }
 
