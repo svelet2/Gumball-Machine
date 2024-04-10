@@ -1,9 +1,7 @@
 package edu.iu.habahram.GumballMachine.service;
 
-import edu.iu.habahram.GumballMachine.model.GumballMachine;
-import edu.iu.habahram.GumballMachine.model.GumballMachineRecord;
-import edu.iu.habahram.GumballMachine.model.IGumballMachine;
-import edu.iu.habahram.GumballMachine.model.TransitionResult;
+import edu.iu.habahram.GumballMachine.model.*;
+import edu.iu.habahram.GumballMachine.repository.GumballMachineFileRepository;
 import edu.iu.habahram.GumballMachine.repository.IGumballRepository;
 import org.springframework.stereotype.Service;
 
@@ -62,30 +60,38 @@ public class GumballService implements IGumballService{
 
     @Override
     public TransitionResult insertQuarter(String id) throws IOException {
-        return performTransition(id, GumballMachine::insertQuarter);
+        GumballMachineRecord record = gumballRepository.findById(id);
+        GumballMachine2 machine = new GumballMachine2(record.getId(), record.getState(), record.getCount());
+
+        return machine.insertQuarter();
     }
 
     @Override
     public TransitionResult ejectQuarter(String id) throws IOException {
-        return performTransition(id, GumballMachine::ejectQuarter);
+        GumballMachineRecord record = gumballRepository.findById(id);
+        GumballMachine2 machine = new GumballMachine2(record.getId(), record.getState(), record.getCount());
+        return machine.ejectQuarter();
     }
 
     @Override
     public TransitionResult turnCrank(String id) throws IOException {
-        return performTransition(id, GumballMachine::turnCrank);
+        GumballMachineRecord record = gumballRepository.findById(id);
+        GumballMachine2 machine = new GumballMachine2(record.getId(), record.getState(), record.getCount());
+        return machine.turnCrank();
+
     }
 
-    private TransitionResult performTransition(String id, Function<GumballMachine, TransitionResult> transitionFunction) throws IOException {
-        GumballMachineRecord record = gumballRepository.findById(id);
-        GumballMachine machine = new GumballMachine(record.getId(), record.getState(), record.getCount());
-        TransitionResult result = transitionFunction.apply(machine);
-        if (result.succeeded()) {
-            record.setState(result.stateAfter());
-            record.setCount(result.countAfter());
-            save(record);
-        }
-        return result;
-    }
+//    private TransitionResult performTransition(String id, Function<GumballMachine2, TransitionResult> transitionFunction) throws IOException {
+//        GumballMachineRecord record = gumballRepository.findById(id);
+//        GumballMachine2 machine = new GumballMachine2(record.getId(), record.getState(), record.getCount());
+//        TransitionResult result = transitionFunction.apply(machine);
+//        if (result.succeeded()) {
+//            record.setState(result.stateAfter());
+//            record.setCount(result.countAfter());
+//            save(record);
+//        }
+//        return result;
+//    }
 
     @Override
     public List<GumballMachineRecord> findAll() throws IOException {
