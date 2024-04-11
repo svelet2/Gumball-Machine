@@ -76,20 +76,13 @@ public class GumballService implements IGumballService{
 
     private TransitionResult performTransition(String id, Function<GumballMachine2, TransitionResult> transitionFunction) throws IOException {
         GumballMachineRecord record = gumballRepository.findById(id);
-        System.out.println("\nRecord: " + record);
         GumballMachine2 machine = new GumballMachine2(record.getId(), record.getState(), record.getCount());
         TransitionResult result = transitionFunction.apply(machine);
         if (result.succeeded()) {
-            System.out.println("Record in if statement: " + record);
             record.setState(result.stateAfter());
-            System.out.println("After state: " + record.getState());
             record.setCount(result.countAfter());
-            System.out.println("After count: " + record.getCount());
             save(record);
-            System.out.println("After save: " + record);
         }
-        System.out.println("Record after transition: " + record);
-        System.out.println("Result: " + result);
         return result;
     }
 

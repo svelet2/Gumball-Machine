@@ -34,8 +34,6 @@ public final class GumballMachineRecord {
                 machineId,
                 getState(),
                 getCount());
-        System.out.println("IN gumballmachineRecord toLine()");
-        System.out.println(line);
         return line;
     }
 
