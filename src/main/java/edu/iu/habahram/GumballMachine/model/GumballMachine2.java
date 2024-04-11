@@ -45,11 +45,13 @@ public class GumballMachine2 implements IGumballMachine{
     }
     @Override
     public TransitionResult insertQuarter() {
+        System.out.println("Inserting quarter: " + state);
         return state.insertQuarter();
     }
 
     @Override
     public TransitionResult ejectQuarter() {
+        System.out.println("Ejecting quarter" + state);
         return state.ejectQuarter();
     }
 

@@ -40,6 +40,7 @@ public class GumballMachineController {
     @PutMapping("/insert-quarter")
     public TransitionResult insertQuarter(@RequestBody TransitionRequest transitionRequest) {
         try {
+            System.out.println(transitionRequest.id());
             return gumballService.insertQuarter(transitionRequest.id());
         } catch (Exception e) {
             throw new RuntimeException(e);

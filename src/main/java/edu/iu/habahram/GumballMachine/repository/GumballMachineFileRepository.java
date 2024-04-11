@@ -73,9 +73,12 @@ public class GumballMachineFileRepository implements IGumballRepository {
     @Override
     public String save(GumballMachineRecord gumballMachineRecord) throws IOException {
         String id = gumballMachineRecord.getId();
+        System.out.println("GYmballMachineRecord id: " + gumballMachineRecord);
         if (id != null) {
+            System.out.println("NOT NULL");
             update(gumballMachineRecord);
         } else {
+            System.out.println("NULL");
             id = add(gumballMachineRecord);
         }
         return id;

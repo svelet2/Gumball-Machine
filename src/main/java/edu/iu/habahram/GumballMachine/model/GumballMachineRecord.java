@@ -29,10 +29,13 @@ public final class GumballMachineRecord {
     }
 
     public String toLine(String machineId) {
-        String line = String.format("%1s,%2s,%3s",
+        int len = String.valueOf(getCount()).length();
+        String line = String.format("%1s,%2s,%"+ len + "s",
                 machineId,
                 getState(),
                 getCount());
+        System.out.println("IN gumballmachineRecord toLine()");
+        System.out.println(line);
         return line;
     }
 
