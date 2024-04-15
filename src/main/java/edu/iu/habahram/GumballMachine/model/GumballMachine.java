@@ -73,6 +73,25 @@ public class GumballMachine implements IGumballMachine {
     }
 
     @Override
+    public TransitionResult refill(int countBalls) {
+        boolean succeeded = false;
+        String message = "";
+        if (state.equalsIgnoreCase(HAS_QUARTER)) {
+            message = "Machine doesn't need to be refilled";
+        } else if (state.equalsIgnoreCase(NO_QUARTER)) {
+            message = "Machine doesn't need to be refilled";
+        } else if (state.equalsIgnoreCase(SOLD_OUT)) {
+            message = "Machine refilled";
+            count = countBalls;
+            state = NO_QUARTER;
+            succeeded = true;
+        } else if (state.equalsIgnoreCase(SOLD)) {
+            message = "Machine doesn't need to be refilled";
+        }
+        return new TransitionResult(succeeded, message, state, count);
+    }
+
+    @Override
     public void changeTheStateTo(GumballMachineState name) {
 
     }
@@ -115,6 +134,11 @@ public class GumballMachine implements IGumballMachine {
     @Override
     public void releaseBall() {
 
+    }
+
+    @Override
+    public void setCount(int balls) {
+        this.count = balls;
     }
 
 
